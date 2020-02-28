@@ -1,0 +1,61 @@
+<div class='panel panel-primary'>
+    <div class='panel-heading'>
+        {{ pageTitle }}
+    </div>
+    <div class='panel-body'>
+        <div class='row'>
+            <div class='col-md-2'>Filter by:</div>
+            <div class='col-md-4'>
+                <input type='text' [(ngModel)]="filterText" (ngModelChange)="filterProducts()" />&nbsp;
+
+            </div>
+        </div>
+        <div class='row'>
+            <div class='col-md-6'>
+                <h3>Filtered by: </h3>{{ filterText }}
+            </div>
+        </div>
+        <div class='table-responsive'>
+            <table class='table'>
+                <thead>
+                    <tr>
+                        <th>
+                            <button (click)="toggleImage()" class='btn btn-primary'>
+    
+                            Show Image
+                            </button>
+                        </th>
+                        <th>Product</th>
+                        <th>Code</th>
+                        <th>Available</th>
+                        <th>Price</th>
+                        <th>5 Star Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let p of filteredproducts ">
+                        <th>
+                            <img *ngIf="showImage" [src]='p.imageUrl' [title]='p.productName' [style.width.px]="60" [style.height.px]="60">
+                        </th>
+                        <th>{{p.productId }}</th>
+                        <th>
+                            <a [routerLink]="['/product',p.productId]">
+                            {{p.productCode | lowercase | convertToSpaces : "-"}}
+                        </a>
+
+                        </th>
+
+                        <th>{{p.productName }}</th>
+                        <th>{{p.price |currency:'USD':'symbol':'1.2-2' }}</th>
+                        <!-- <th>
+                            {{p.starRating}}
+                        </th> -->
+                        <th>
+                            <app-product-star-rating (parentRating)="alert($event)" [rating]="p.starRating"></app-product-star-rating>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
